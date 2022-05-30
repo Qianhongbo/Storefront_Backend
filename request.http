@@ -1,0 +1,88 @@
+###
+@local_ip = 0.0.0.0
+
+# * Hello world
+GET http://{{local_ip}}:3000/
+
+###
+# * Users index
+GET http://{{local_ip}}:3000/users HTTP/1.1
+
+@user_id = 6
+###
+# * show an User
+GET http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
+
+###
+# * create an User
+# @name loginAdmin
+POST http://{{local_ip}}:3000/users/register HTTP/1.1
+content-type: application/json
+
+{
+    "firstName": "Maverick",
+    "lastName": "Qian",
+    "password": "980620"
+}
+
+###
+# * delete an User
+DELETE http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
+
+
+###
+# * Products index
+GET http://{{local_ip}}:3000/products HTTP/1.1
+
+@product_id = 1
+###
+# * show an User
+GET http://{{local_ip}}:3000/products/{{product_id}} HTTP/1.1
+
+###
+# * create an User
+@token = {{loginAdmin.response.body.*}}
+POST http://{{local_ip}}:3000/products/ HTTP/1.1
+authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "name": "iph",
+    "price": 1000,
+    "category": "ph"
+}
+
+###
+# * select by category
+GET http://{{local_ip}}:3000/products/category/ph HTTP/1.1
+
+###
+# * Orders index
+GET http://{{local_ip}}:3000/orders HTTP/1.1
+
+@order_id = 5
+###
+# * show an Order
+GET http://{{local_ip}}:3000/orders/{{order_id}} HTTP/1.1
+
+###
+# * create an Order
+POST http://{{local_ip}}:3000/orders/ HTTP/1.1
+content-type: application/json
+
+{
+    "product_id": 2,
+    "quantity": 5,
+    "user_id": 7,
+    "status": "active"
+}
+
+###
+# * update the order
+PUT http://{{local_ip}}:3000/orders/update HTTP/1.1
+content-type: application/json
+
+{
+    "order_id": 4,
+    "status": "closed"
+}
