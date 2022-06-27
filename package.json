@@ -7,7 +7,7 @@
     "build": "npx tsc",
     "start": "nodemon src/server.ts",
     "watch": "tsc-watch --esModuleInterop src/server.ts --outDir ./dist --onSuccess \"node ./dist/server.js\"",
-    "test": "export ENV=test&& tsc && db-migrate db:drop storefront_test && db-migrate db:create storefront_test && db-migrate --env test up && jasmine-ts && db-migrate db:drop storefront_test",
+    "test": "export ENV=test && tsc && db-migrate db:drop storefront_test && db-migrate db:create storefront_test && db-migrate --env test up && jasmine-ts && db-migrate db:drop storefront_test",
     "tsc": "tsc"
   },
   "author": "Udacity",

@@ -29,5 +29,6 @@ After we have configured the database, we can use `docker-compose up` to create 
 db-migrate create users-table --sql-file
 db-migrate create Products-table --sql-file
 db-migrate create Orders-table --sql-file
+db-migrate create order-products-table --sql-file
 ```
 

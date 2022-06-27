@@ -1,7 +1,11 @@
 ###
 @local_ip = 127.0.0.1
 
-@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxNywiZmlyc3RfbmFtZSI6Ik1hdmVyaWNrIiwibGFzdF9uYW1lIjoiUWlhbiIsInBhc3N3b3JkIjoiJDJiJDEwJEptTVpYczlUWkVRRDJDeC9OTlVYRS5KWjBCYXJLRHBJd2FKQkkwT3ZWanRVSDZLMzFLWXZPIn0sImlhdCI6MTY1NjI4OTY5NH0.2rRlIPDI5wSYQluwyJXqH2e2XSSzvSdo-xeJgo3y9hg
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxLCJmaXJzdF9uYW1lIjoiTWF2ZXJpY2siLCJsYXN0X25hbWUiOiJRaWFuIiwicGFzc3dvcmQiOiIkMmIkMTAkYnd4dkRCQTlpLzB6by9Xd295ZGVDLmZROTRSaUd1MnBLenM1SGpzM3F6TFZhRjZmOUZmUVcifSwiaWF0IjoxNjU2MzU4MjQ3fQ.Yavg1Pq4U_Y3xNwuSZz1hWgliNMexN73fjxdQNxXB8c
+
+@user_id = 1
+@product_id = 1
+@order_id = 1
 
 # * Hello world
 GET http://{{local_ip}}:3000/
@@ -23,7 +27,6 @@ content-type: application/json
 GET http://{{local_ip}}:3000/users HTTP/1.1
 authorization: Bearer {{token}}
 
-@user_id = 10
 ###
 # * show an User
 GET http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
@@ -39,7 +42,6 @@ authorization: Bearer {{token}}
 GET http://{{local_ip}}:3000/products HTTP/1.1
 authorization: Bearer {{token}}
 
-@product_id = 1
 ###
 # * show a product
 GET http://{{local_ip}}:3000/products/{{product_id}} HTTP/1.1
@@ -67,7 +69,6 @@ authorization: Bearer {{token}}
 GET http://{{local_ip}}:3000/orders HTTP/1.1
 authorization: Bearer {{token}}
 
-@order_id = 4
 ###
 # * show an Order
 GET http://{{local_ip}}:3000/orders/{{order_id}} HTTP/1.1
@@ -80,11 +81,14 @@ authorization: Bearer {{token}}
 content-type: application/json
 
 {
-    "product_id": 1,
-    "quantity": 5,
-    "user_id": 8,
+    "user_id": {{user_id}},
     "status": "active"
 }
+
+###
+# * get orders by user_id
+GET http://{{local_ip}}:3000/orders/user/{{user_id}} HTTP/1.1
+authorization: Bearer {{token}}
 
 ###
 # * update the order
@@ -93,6 +97,44 @@ authorization: Bearer {{token}}
 content-type: application/json
 
 {
-    "order_id": 5,
+    "order_id": {{order_id}},
     "status": "closed"
+}
+
+###
+# * create an order_product
+POST http://{{local_ip}}:3000/orders/order-product HTTP/1.1
+authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "order_id": {{order_id}},
+    "product_id": {{product_id}},
+    "quantity": 3
+}
+
+###
+# * get order_products by order_id
+GET http://{{local_ip}}:3000/orders/order-product/1 HTTP/1.1
+authorization: Bearer {{token}}
+content-type: application/json
+
+
+
+###
+# * delete the order_product
+DELETE http://{{local_ip}}:3000/orders/order-product/{{order_id}} HTTP/1.1
+authorization: Bearer {{token}}
+content-type: application/json
+
+###
+# * update the order_product
+PUT http://{{local_ip}}:3000/orders/order-product/update HTTP/1.1
+authorization: Bearer {{token}}
+content-type: application/json
+
+{
+    "order_id": {{order_id}},
+    "product_id": {{product_id}},
+    "quantity": 5
 }

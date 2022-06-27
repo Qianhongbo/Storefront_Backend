@@ -6,14 +6,25 @@ const store = new ProductStore();
 
 // * get all the records
 const index = async (_req: Request, res: Response) => {
-  const products = await store.index();
-  res.json(products);
+  try {
+    const products = await store.index();
+    res.json(products);
+  } catch (err) {
+    res.status(400)
+    res.json(err)
+  }
+
 };
 
 // * show one specific record
 const show = async (req: Request, res: Response) => {
-  const product = await store.show(parseInt(req.params.id));
-  res.json(product);
+  try {
+    const product = await store.show(parseInt(req.params.id));
+    res.json(product);
+  } catch (err) {
+    res.status(400)
+    res.json(err)
+  }
 }
 
 // * create an record
@@ -28,16 +39,21 @@ const create = async (req: Request, res: Response) => {
 
     const newProduct = await store.create(product)
     res.json(newProduct)
-  } catch(err) {
-      res.status(400)
-      res.json(err)
+  } catch (err) {
+    res.status(400)
+    res.json(err)
   }
 }
 
 // * delete a record
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(parseInt(req.params.id))
-  res.json(deleted)
+  try {
+    const deleted = await store.delete(parseInt(req.params.id))
+    res.json(deleted)
+  } catch (err) {
+    res.status(400)
+    res.json(err)
+  }
 }
 
 // * select by categoty
@@ -45,7 +61,7 @@ const selectByCategory = async (req: Request, res: Response) => {
   try {
     const products = await store.selectByCategory(req.params.category);
     res.json(products);
-  } catch(err) {
+  } catch (err) {
     res.status(400)
     res.json(err)
   }

@@ -4,7 +4,7 @@ The company stakeholders want to create an online storefront to showcase their g
 These are the notes from a meeting with the frontend developer that describe what endpoints the API needs to supply, as well as data shapes the frontend and backend have agreed meet the requirements of the application. 
 
 ## API Endpoints
-#### Users
+### Users
 
 1. Index
    - Method - GET
@@ -34,7 +34,7 @@ These are the notes from a meeting with the frontend developer that describe wha
    - Usage - Delete an exciting User
    - http://localhost:3000/users/:id
 
-#### Products
+### Products
 
 1. Index
    - Method - GET
@@ -70,7 +70,7 @@ These are the notes from a meeting with the frontend developer that describe wha
    - Usage - Select products via category
    - http://localhost:3000/products/category/:category
 
-#### Orders
+### Orders
 
 1. Index
    - Method - GET
@@ -78,34 +78,63 @@ These are the notes from a meeting with the frontend developer that describe wha
    - Parameters - none
    - Usage - list all orders
    - http://localhost:3000/orders
-
 2. Show
    - Method - GET
    - Authorization required - Bearer
    - Parameters - none
    - Usage - list a specific order
    - http://localhost:3000/orders/:id
-
+3. getOrdersByUserId
+   - Method - GET
+   - Authorization required - Bearer
+   - Parameters - none
+   - Usage - list a specific order
+   - http://localhost:3000/orders/user/:id
 3. Create
    - Method - POST
    - Authorization required - Bearer
    - Parameters - product_id, quantity, user_id, status
    - Usage - create a new order
    - http://localhost:3000/orders
-
 4. Delete
    - Method - DELETE
    - Authorization required - Bearer
    - Parameters - none
    - Usage - Delete an exciting order
    - http://localhost:3000/orders/:id
-
 5. Update
    - Method - PUT
    - Authorization required - Bearer
    - Parameters - id, status
    - Usage - edit an exciting order
-   - http://localhost:3000//orders/update
+   - http://localhost:3000/orders/update
+
+### order_products
+
+1. Index by order_id
+   - Method - GET
+   - Authorization required - Bearer
+   - Parameters - none
+   - Usage - get all oder_products for s specific order_id
+   - http://localhost:3000/orders/order-product/:order_id
+2. Create
+   - Method - POST
+   - Authorization required - Bearer
+   - Parameters - order_id, product_id, quantity
+   - Usage - create an order_product
+   - http://localhost:3000/orders/order-product
+3. Update 
+   - Method - PUT
+   - Authorization required - Bearer
+   - Parameters - order_id, product_id, quantity
+   - Usage - change an order_product
+   - http://localhost:3000/orders/order-product/update
+4. Delete
+   - Method - DELETE
+   - Authorization required - Bearer
+   - Parameters - none
+   - Usage - delete an order_product
+   - http://localhost:3000/orders/order-product/:order_id
 
 ## Data Shapes
 #### User
@@ -134,9 +163,17 @@ CREATE TABLE products (
 ```sql
 CREATE TABLE orders (
     id SERIAL PRIMARY KEY,
-    product_id INTEGER REFERENCES products(id),
-    quantity INTEGER DEFAULT 1,
     user_id INTEGER REFERENCES users(id),
     status VARCHAR(15)
 );
 ```
+
+```sql
+CREATE TABLE order_products (
+    id SERIAL PRIMARY KEY,
+    order_id INTEGER REFERENCES orders(id),
+    product_id INTEGER REFERENCES products(id),
+    quantity INTEGER DEFAULT 1
+);
+```
+

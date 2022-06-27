@@ -13,6 +13,14 @@ Your application must make use of the following libraries:
 - jsonwebtoken from npm for working with JWTs
 - jasmine from npm for testing
 
+## Basic
+
+- Runtime: Node.js 
+- Web application framework: Express
+- Language: TypeScript
+- Database: Postgres
+- Testing: Jasmine
+
 ## Package installation
 
 ```bash
@@ -23,6 +31,14 @@ npm install
 
 ```bash
 docker-compose up
+```
+
+## Create database
+
+Create the database in PostgreSQL database.
+
+```sql
+create database storefront_dev;
 ```
 
 ## Database migration
@@ -38,12 +54,17 @@ db-migrate down
 npm run start
 ```
 
-The program is running at port 3000.
-
-## Test the program
+## Test the program with Jasmine
 
 ```bash
 npm run test
+```
+
+## Ports
+
+```
+express port: localhost:3000
+docker port: localhost:5432
 ```
 
 ## `.env`
