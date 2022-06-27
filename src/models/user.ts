@@ -23,7 +23,7 @@ export class UserStore {
     }
   }
 
-  async show(id: string): Promise<User> {
+  async show(id: number): Promise<User> {
     try {
       const sql = "SELECT * FROM users WHERE id=($1)";
       // @ts-ignore
@@ -44,24 +44,12 @@ export class UserStore {
       const conn = await Client.connect();
       const pepper = process.env.BCRYPT_PASSWORD;
       const saltRounds = process.env.SALT_ROUNDS as string;
-      console.log(u.password)
-      console.log(pepper)
-      console.log(parseInt(saltRounds))
       const hash = bcrypt.hashSync(
         u.password + pepper,
         parseInt(saltRounds)
       );
-      console.log(u.first_name);
-      console.log(u.last_name);
-      console.log(hash);
       const result = await conn.query(sql, [u.first_name, u.last_name, hash]);
-      // console.log(result.rows[0].firstname)
-      // console.log(result.rows[0].lastname )
-      // console.log(result.rows[0].password)
       const user = result.rows[0];
-      console.log(user.firstname)
-      console.log(user.lastname)
-      console.log(user.password)
       conn.release();
       return user;
     } catch (err) {
@@ -71,7 +59,7 @@ export class UserStore {
     }
   }
 
-  async delete(id: string): Promise<User> {
+  async delete(id: number): Promise<User> {
     try {
       const sql = "DELETE FROM users WHERE id=($1)";
       // @ts-ignore

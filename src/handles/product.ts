@@ -10,9 +10,9 @@ const index = async (_req: Request, res: Response) => {
   res.json(products);
 };
 
-// show one specific record
+// * show one specific record
 const show = async (req: Request, res: Response) => {
-  const product = await store.show(req.params.id);
+  const product = await store.show(parseInt(req.params.id));
   res.json(product);
 }
 
@@ -36,7 +36,7 @@ const create = async (req: Request, res: Response) => {
 
 // * delete a record
 const destroy = async (req: Request, res: Response) => {
-  const deleted = await store.delete(req.params.id)
+  const deleted = await store.delete(parseInt(req.params.id))
   res.json(deleted)
 }
 
@@ -55,7 +55,7 @@ const verifyAuthToken = (req: Request, res: Response, next: NextFunction) => {
   try {
     const authorizationHeader = req.headers.authorization as string;
     const token = authorizationHeader.split(' ')[1];
-    const decoded = jwt.verify(token, process.env.TOKEN_SECRET as string);
+    jwt.verify(token, process.env.TOKEN_SECRET as string);
     next();
   } catch (error) {
     res.status(401);

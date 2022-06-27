@@ -22,7 +22,7 @@ export class ProductStore {
     }
   }
 
-  async show(id: string): Promise<Product> {
+  async show(id: number): Promise<Product> {
     try {
       const sql = 'SELECT * FROM products WHERE id=($1)'
       // @ts-ignore
@@ -49,7 +49,7 @@ export class ProductStore {
     }
   }
 
-  async delete(id: string): Promise<Product> {
+  async delete(id: number): Promise<Product> {
     try {
       const sql = 'DELETE FROM products WHERE id=($1)'
       // @ts-ignore
@@ -59,6 +59,7 @@ export class ProductStore {
       conn.release()
       return product
     } catch (err) {
+      console.log(err)
       throw new Error(`Could not delete product ${id}. Error: ${err}`);
     }
   }

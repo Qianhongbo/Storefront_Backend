@@ -1,17 +1,10 @@
 ###
-@local_ip = 0.0.0.0
+@local_ip = 127.0.0.1
+
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoxNywiZmlyc3RfbmFtZSI6Ik1hdmVyaWNrIiwibGFzdF9uYW1lIjoiUWlhbiIsInBhc3N3b3JkIjoiJDJiJDEwJEptTVpYczlUWkVRRDJDeC9OTlVYRS5KWjBCYXJLRHBJd2FKQkkwT3ZWanRVSDZLMzFLWXZPIn0sImlhdCI6MTY1NjI4OTY5NH0.2rRlIPDI5wSYQluwyJXqH2e2XSSzvSdo-xeJgo3y9hg
 
 # * Hello world
 GET http://{{local_ip}}:3000/
-
-###
-# * Users index
-GET http://{{local_ip}}:3000/users HTTP/1.1
-
-@user_id = 6
-###
-# * show an User
-GET http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
 
 ###
 # * create an User
@@ -20,28 +13,40 @@ POST http://{{local_ip}}:3000/users/register HTTP/1.1
 content-type: application/json
 
 {
-    "firstName": "Maverick",
-    "lastName": "Qian",
+    "first_name": "Maverick",
+    "last_name": "Qian",
     "password": "980620"
 }
 
 ###
+# * Users index
+GET http://{{local_ip}}:3000/users HTTP/1.1
+authorization: Bearer {{token}}
+
+@user_id = 10
+###
+# * show an User
+GET http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
+authorization: Bearer {{token}}
+
+###
 # * delete an User
 DELETE http://{{local_ip}}:3000/users/{{user_id}} HTTP/1.1
-
+authorization: Bearer {{token}}
 
 ###
 # * Products index
 GET http://{{local_ip}}:3000/products HTTP/1.1
+authorization: Bearer {{token}}
 
 @product_id = 1
 ###
-# * show an User
+# * show a product
 GET http://{{local_ip}}:3000/products/{{product_id}} HTTP/1.1
+authorization: Bearer {{token}}
 
 ###
-# * create an User
-@token = {{loginAdmin.response.body.*}}
+# * create a product
 POST http://{{local_ip}}:3000/products/ HTTP/1.1
 authorization: Bearer {{token}}
 content-type: application/json
@@ -55,34 +60,39 @@ content-type: application/json
 ###
 # * select by category
 GET http://{{local_ip}}:3000/products/category/ph HTTP/1.1
+authorization: Bearer {{token}}
 
 ###
 # * Orders index
 GET http://{{local_ip}}:3000/orders HTTP/1.1
+authorization: Bearer {{token}}
 
-@order_id = 5
+@order_id = 4
 ###
 # * show an Order
 GET http://{{local_ip}}:3000/orders/{{order_id}} HTTP/1.1
+authorization: Bearer {{token}}
 
 ###
 # * create an Order
 POST http://{{local_ip}}:3000/orders/ HTTP/1.1
+authorization: Bearer {{token}}
 content-type: application/json
 
 {
-    "product_id": 2,
+    "product_id": 1,
     "quantity": 5,
-    "user_id": 7,
+    "user_id": 8,
     "status": "active"
 }
 
 ###
 # * update the order
 PUT http://{{local_ip}}:3000/orders/update HTTP/1.1
+authorization: Bearer {{token}}
 content-type: application/json
 
 {
-    "order_id": 4,
+    "order_id": 5,
     "status": "closed"
 }

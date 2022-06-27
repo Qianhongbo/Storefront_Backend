@@ -5,7 +5,7 @@ import product_routes from './handles/product';
 import order_routes from './handles/order';
 
 const app: express.Application = express()
-const address: string = "0.0.0.0:3000"
+const address: string = "127.0.0.1:3000"
 
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
