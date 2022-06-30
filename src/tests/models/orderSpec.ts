@@ -65,69 +65,69 @@ describe("Order Model", () => {
   it('index method should return a list of orders', async () => {
     const result = await store.index();
     expect(result).toEqual([{
-      id: 1,
-      user_id: 1,
+      id: 2,
+      user_id: 4,
       status: 'active'
     }]);
   });
 
   it('indexOrderProductsByOrderId method should return a list of orders', async () => {
-    const result = await store.indexOrderProductsByOrderId(1);
+    const result = await store.indexOrderProductsByOrderId(2);
     expect(result).toEqual([{
-      id: 1,
-      order_id: 1,
-      product_id: 1,
+      id: 2,
+      order_id: 2,
+      product_id: 3,
       quantity: 3
     }]);
   });
 
   it('show method should return the correct order', async () => {
-    const result = await store.show(1);
+    const result = await store.show(2);
     expect(result).toEqual({
-      id: 1,
-      user_id: 1,
+      id: 2,
+      user_id: 4,
       status: 'active'
     });
   });
 
   it('getOrdersByUserId method should return the correct order_products', async () => {
-    const result = await store.getOrdersByUserId(1);
+    const result = await store.getOrdersByUserId(4);
     expect(result).toEqual([{
-      id: 1,
-      user_id: 1,
+      id: 2,
+      user_id: 4,
       status: 'active'
     }]);
   });
 
   it('update method should change the order', async () => {
-    const result = await store.update(1, 'closed');
+    const result = await store.update(2, 'closed');
     expect(result).toEqual({
-      id: 1,
-      user_id: 1,
+      id: 2,
+      user_id: 4,
       status: 'closed'
     });
   });
 
   it('updateOrderProduct method should change the order_product', async () => {
-    const result = await store.updateOrderProduct(1, 1, 5);
+    const result = await store.updateOrderProduct(2, 3, 5);
     expect(result).toEqual({
-      id: 1,
-      order_id: 1,
-      product_id: 1,
+      id: 2,
+      order_id: 2,
+      product_id: 3,
       quantity: 5
     });
   });
 
-  it('deleteOrderProductByOrderId method should change the order_product', async () => {
-    await store.deleteOrderProductByOrderId(1);
-    const result = await store.indexOrderProductsByOrderId(1);
+  it('deleteOrderProductByOrderId method should delete the order_product', async () => {
+    await store.deleteOrderProductByOrderId(2);
+    const result = await store.indexOrderProductsByOrderId(2);
     expect(result).toEqual([]);
   });
 
   it('delete method should remove the order', async () => {
-    await store.delete(1);
-    await userStore.delete(1);
-    await productStore.delete(1);
+    await store.delete(2);
+    await userStore.delete(4);
+    await productStore.delete(3);
     const result = await store.index()
 
     expect(result).toEqual([]);

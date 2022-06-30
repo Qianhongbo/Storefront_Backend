@@ -65,7 +65,7 @@ describe('Test product endpoint responses', () => {
   });
 
   it('delete endpoint should delete the user', async () => {
-    const response = await request.delete('/products/1')
+    const response = await request.delete('/products/2')
       .set('Authorization', `Bearer ${adminAuthToken}`)
       .expect(200);
   });

@@ -38,13 +38,13 @@ describe("User Model", () => {
   });
 
   it('show method should return the target users', async () => {
-    const result = await store.show(2);
+    const result = await store.show(5);
     expect(result.first_name).toEqual('user');
     expect(result.last_name).toEqual('test');
   });
 
   it('delete method should remove the user', async () => {
-    await store.delete(2);
+    await store.delete(5);
     const result = await store.index()
 
     expect(result).toEqual([]);

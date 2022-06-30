@@ -40,15 +40,14 @@ describe("Product Model", () => {
   });
 
   it('show method should return the correct product', async () => {
-    const result = await store.show(2);
-    expect(result.id).toEqual(2);
+    const result = await store.show(4);
     expect(result.name).toEqual('iphone');
     expect(result.price).toEqual(1000);
     expect(result.category).toEqual('phone');
   });
 
   it('delete method should remove the product', async () => {
-    await store.delete(2);
+    await store.delete(4);
     const result = await store.index()
 
     expect(result).toEqual([]);
