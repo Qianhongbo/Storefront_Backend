@@ -29,16 +29,25 @@ const show = async (req: Request, res: Response) => {
 // create an user
 // need to put the details in the request body
 const create = async (req: Request, res: Response) => {
+  // check the input including all the information we need
+  if (req.body.first_name === undefined ||
+    req.body.last_name === undefined ||
+    req.body.password === undefined) {
+    res.status(400);
+    res.json("Have to post first_name, last_name and password!")
+    return;
+  }
+  
   const user: User = {
     first_name: req.body.first_name,
     last_name: req.body.last_name,
     password: req.body.password,
   }
+
   try {
     const newUser = await store.create(user)
     const theToken = process.env.TOKEN_SECRET as string;
     var token = jwt.sign({ user: newUser }, theToken);
-    jwt.verify(token, process.env.TOKEN_SECRET as string);
     res.json(token)
   } catch (err) {
     res.status(400)
@@ -64,7 +73,7 @@ const authenticate = async (req: Request, res: Response) => {
     password: req.body.password,
   }
   try {
-    const u = await store.authenticate(req.body.firstName, req.body.lastName, req.body.password);
+    const u = await store.authenticate(user);
     const theToken = process.env.TOKEN_SECRET as string;
     var token = jwt.sign({ user: u }, theToken);
     res.json(token);

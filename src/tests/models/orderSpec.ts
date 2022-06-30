@@ -19,13 +19,13 @@ const p: Product = {
 };
 
 const o: Order = {
-  user_id: 1,
+  user_id: 4,
   status: 'active'
 };
 
 const op: OrderProduct = {
-  order_id: 1,
-  product_id: 1,
+  order_id: 2,
+  product_id: 3,
   quantity: 3
 };
 
@@ -50,22 +50,16 @@ describe("Order Model", () => {
     await userStore.create(u);
     await productStore.create(p);
     const result = await store.addOrder(o);
-    expect(result).toEqual({
-      id: 1,
-      user_id: 1,
-      status: 'active'
-    });
+    expect(result.id).toEqual(2);
+    expect(result.user_id).toEqual(4);
+    expect(result.status).toEqual('active');
   });
 
   it('createOrderProduct method should create an order_product', async () => {
     const result = await store.createOrderProduct(op);
-
-    expect(result).toEqual({
-      id: 1,
-      order_id: 1,
-      product_id: 1,
-      quantity: 3
-    });
+    expect(result.order_id).toEqual(2);
+    expect(result.product_id).toEqual(3);
+    expect(result.quantity).toEqual(3);
   });
 
   it('index method should return a list of orders', async () => {

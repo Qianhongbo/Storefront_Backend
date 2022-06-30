@@ -23,6 +23,17 @@ content-type: application/json
 }
 
 ###
+# * authenticate / login
+POST http://{{local_ip}}:3000/users/authenticate HTTP/1.1
+content-type: application/json
+
+{
+    "first_name": "Maverick",
+    "last_name": "Qian",
+    "password": "980620"
+}
+
+###
 # * Users index
 GET http://{{local_ip}}:3000/users HTTP/1.1
 authorization: Bearer {{token}}

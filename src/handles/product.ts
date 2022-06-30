@@ -30,6 +30,14 @@ const show = async (req: Request, res: Response) => {
 // * create an record
 // need to put the details in the request body
 const create = async (req: Request, res: Response) => {
+  // check the input including all the information we need
+  if (req.body.name === undefined ||
+    req.body.price === undefined) {
+    res.status(400);
+    res.json("Have to post name and price!")
+    return;
+  }
+
   try {
     const product: Product = {
       name: req.body.name,

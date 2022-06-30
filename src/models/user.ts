@@ -73,20 +73,16 @@ export class UserStore {
     }
   }
 
-  async authenticate(
-    firstName: string,
-    lastName: string,
-    password: string
-  ): Promise<User | null> {
+  async authenticate(u: User): Promise<User | null> {
     // @ts-ignore
     const conn = await Client.connect();
-    const sql = "SELECT password FROM users where fistName=($1) AND lastName=($2)";
-    const result = await conn.query(sql, [firstName, lastName]);
+    const sql = "SELECT id, first_name, last_name, password FROM users where first_name=($1) AND last_name=($2)";
+    const result = await conn.query(sql, [u.first_name, u.last_name]);
     const pepper = process.env.BCRYPT_PASSWORD;
 
     if (result.rows.length) {
       const user = result.rows[0];
-      if (bcrypt.compareSync(password + pepper, user.password)) {
+      if (bcrypt.compareSync(u.password + pepper, user.password)) {
         return user;
       }
     }
